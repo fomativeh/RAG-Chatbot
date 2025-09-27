@@ -1,7 +1,7 @@
 # 🤖 Dual Mode RAG Chatbot
 ### *Intelligent Document Q&A with Context-Aware Responses*
 
-## 📹 Live Demo
+## 📹 Live Demo (https://covid-rag.streamlit.app)
 ![App Demo](https://github.com/user-attachments/assets/68d62d14-0c02-4896-b668-b9742cbb3106)
 
 ![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
