@@ -5,5 +5,3 @@ __pycache__/
 data/
 .DS_Store
 *.log
-
-README.md
