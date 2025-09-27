@@ -9,7 +9,7 @@
 > **🎯 Quick Demo**: *Upload a PDF → Ask questions → Get intelligent, source-cited answers in seconds*
 
 ## 📹 Live Demo
-![App Demo](https://github.com/fomativeh/RAG-Chatbot/blob/master/assets/videos/app-demo.gif)
+![App Demo](https://github.com/user-attachments/assets/68d62d14-0c02-4896-b668-b9742cbb3106)
 
 ## 🚀 The best part?
 
