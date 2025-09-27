@@ -1,0 +1,9 @@
+__pycache__/
+.venv/
+.env
+.chromadb/
+data/
+.DS_Store
+*.log
+
+README.md
