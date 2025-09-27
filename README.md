@@ -1,6 +1,9 @@
 # 🤖 Dual Mode RAG Chatbot
 ### *Intelligent Document Q&A with Context-Aware Responses*
 
+## 📹 Live Demo
+![App Demo](https://github.com/user-attachments/assets/68d62d14-0c02-4896-b668-b9742cbb3106)
+
 ![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.28+-red.svg)
 ![LangChain](https://img.shields.io/badge/LangChain-Latest-green.svg)
@@ -8,16 +11,13 @@
 
 > **🎯 Quick Demo**: *Upload a PDF → Ask questions → Get intelligent, source-cited answers in seconds*
 
-## 📹 Live Demo
-![App Demo](https://github.com/user-attachments/assets/68d62d14-0c02-4896-b668-b9742cbb3106)
-
 ## 🚀 The best part?
 
 **Two Intelligent Modes in One App:**
 - **🩺 COVID-19 Assistant**: Pre-loaded with NIH treatment guidelines
 - **🧠 Custom Document Bot**: Upload your own PDFs/docs for instant Q&A
 
-**Key Features That Impress:**
+**Key Features:**
 - ⚡ **Real-time RAG**: Semantic search + GPT responses with conversation memory
 - 📚 **Smart Citations**: Every answer includes source page references
 - 🧠 **Context Awareness**: Remembers conversation history for follow-up questions
