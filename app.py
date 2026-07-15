@@ -316,11 +316,22 @@ def format_context(documents: List[str], labels: List[str]) -> str:
         context_parts.append(f"[Page {page_num}]:\n{doc}\n")
     return "\n".join(context_parts)
 
+def get_secret(key: str):
+    try:
+        if key in st.secrets:
+            return str(st.secrets[key])
+    except Exception:
+        pass
+    return os.getenv(key)
+
 def openrouter_direct_call(prompt: str) -> str:
     """Direct API call to OpenRouter as fallback"""
-    api_key = os.getenv('OPENROUTER_API_KEY')
+    api_key = get_secret("OPENROUTER_API_KEY")
     if not api_key:
         return "Error: OPENROUTER_API_KEY not configured"
+    
+    base_url = "https://openrouter.ai/api/v1"
+    model = "openai/gpt-3.5-turbo"
     
     headers = {
         "Authorization": f"Bearer {api_key}",
@@ -328,14 +339,14 @@ def openrouter_direct_call(prompt: str) -> str:
     }
     
     data = {
-        "model": "openai/gpt-3.5-turbo",
+        "model": model,
         "messages": [{"role": "user", "content": prompt}],
         "temperature": 0.2
     }
     
     try:
         response = requests.post(
-            "https://openrouter.ai/api/v1/chat/completions",
+            f"{base_url.rstrip('/')}/chat/completions",
             headers=headers,
             json=data,
             timeout=30
@@ -345,6 +356,43 @@ def openrouter_direct_call(prompt: str) -> str:
     except Exception as e:
         logger.error(f"OpenRouter direct API call failed: {e}")
         return "I apologize, but I'm having trouble generating a response right now. Please try again."
+
+def generate_llm_response(prompt: str) -> str:
+    openrouter_key = get_secret("OPENROUTER_API_KEY")
+    openai_key = get_secret("OPENAI_API_KEY")
+
+    if openrouter_key:
+        try:
+            llm = ChatOpenAI(
+                model="openai/gpt-3.5-turbo",
+                temperature=0.2,
+                api_key=openrouter_key,
+                base_url="https://openrouter.ai/api/v1",
+                max_retries=2,
+                request_timeout=30
+            )
+            return llm.invoke([HumanMessage(content=prompt)]).content
+        except Exception as e:
+            logger.error(f"OpenRouter error: {e}")
+
+    if openai_key:
+        try:
+            llm = ChatOpenAI(
+                model="gpt-3.5-turbo",
+                temperature=0.2,
+                api_key=openai_key,
+                base_url="https://api.openai.com/v1",
+                max_retries=2,
+                request_timeout=30
+            )
+            return llm.invoke([HumanMessage(content=prompt)]).content
+        except Exception as e:
+            logger.error(f"OpenAI fallback error: {e}")
+
+    if openrouter_key:
+        return openrouter_direct_call(prompt)
+
+    return "Error: No LLM API key configured (set OPENROUTER_API_KEY or OPENAI_API_KEY in Streamlit secrets or .env)."
 
 def main():
     st.set_page_config(
@@ -536,20 +584,7 @@ def main():
                     
                     # Generate response
                     with st.spinner("💭 Generating response..."):
-                        load_dotenv(override=True)  # This forces a reload
-                        try:
-                            llm = ChatOpenAI(
-                                model="openai/gpt-3.5-turbo",
-                                temperature=0.2,
-                                api_key=os.getenv('OPENROUTER_API_KEY'),
-                                base_url=os.getenv("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1"),
-                                max_retries=2,
-                                request_timeout=30
-                            )
-                            response = llm.invoke([HumanMessage(content=final_prompt)]).content
-                        except Exception as e:
-                            logger.error(f"LangChain OpenRouter error: {e}")
-                            response = openrouter_direct_call(final_prompt)
+                        response = generate_llm_response(final_prompt)
                 
             except Exception as e:
                 logger.error(f"Error generating response: {e}")

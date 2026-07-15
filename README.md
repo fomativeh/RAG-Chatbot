@@ -53,7 +53,7 @@ pip install -r requirements.txt
 Create `.env` file:
 ```env
 OPENROUTER_API_KEY=your_openrouter_api_key_here
-OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
+OPENAI_API_KEY=your_openai_api_key_here
 COVID_DOC_URL=https://www.ncbi.nlm.nih.gov/books/NBK570371/pdf/Bookshelf_NBK570371.pdf
 ```
 
@@ -100,9 +100,10 @@ streamlit run app.py
 
 ```txt
 streamlit>=1.28.0
-langchain>=0.1.0
-langchain-openai>=0.0.5
-langchain-community>=0.0.13
+langchain-core>=0.2,<0.3
+langchain-text-splitters>=0.2,<0.3
+langchain-community>=0.2,<0.3
+langchain-openai>=0.1,<0.2
 chromadb>=0.4.15
 sentence-transformers>=2.2.2
 PyPDF2>=3.0.1
