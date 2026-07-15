@@ -4,9 +4,10 @@ import streamlit as st
 from dotenv import load_dotenv
 import logging
 from langchain_openai import ChatOpenAI
-from langchain.schema import SystemMessage, HumanMessage, Document as LCDocument
+from langchain_core.messages import SystemMessage, HumanMessage
+from langchain_core.documents import Document as LCDocument
 from langchain_community.document_loaders import PyPDFLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.embeddings import HuggingFaceEmbeddings
 import chromadb
 from chromadb.config import Settings

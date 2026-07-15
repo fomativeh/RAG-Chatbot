@@ -4,3 +4,4 @@ __pycache__/
 .chromadb/
 .DS_Store
 *.log
+*.mp4
