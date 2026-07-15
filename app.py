@@ -13,6 +13,11 @@ import chromadb
 from chromadb.config import Settings
 import requests
 
+_qp = st.experimental_get_query_params()
+if _qp.get("health", [None])[0] == "1":
+    st.write("ok")
+    st.stop()
+
 # Load environment variables
 load_dotenv(os.path.join(os.path.dirname(__file__), '.env'))
 
